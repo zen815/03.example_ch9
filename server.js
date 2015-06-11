@@ -8,9 +8,9 @@ var app = connect();
 
 app.use(serveStatic("../03.example_ch9/src"));
 
-app.use('/css', serveStatic(__dirname + '/node_modules/bootstrap/dist/css/'));
+app.use('/bootstrap', serveStatic(__dirname + '/node_modules/bootstrap/dist/css/'));
 
-app.use('/scripts', serveStatic(__dirname + '/node_modules/angular/'));
+app.use('/angular', serveStatic(__dirname + '/node_modules/angular/'));
 
 app.listen(5000);
 
