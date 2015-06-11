@@ -8,21 +8,27 @@
     <script src="/angular/angular.js"></script>
     <script>
         angular.module("exampleApp", [])
-            .controller("dayCtrl", function($scope) {
-                var dayNames = ["Sunday", "Monday", "Tuesday", "Wednesday",
-                    "Thursday", "Friday", "Saturday"];
+            .constant("dayNames", ["Sunday", "Monday", "Tuesday", "Wednesday",
+                "Thursday", "Friday", "Saturday"])
+            .controller("dayCtrl", ['$scope', 'dayNames', function($scope,dayNames){
                 $scope.day = dayNames[new Date().getDay()];
-            })
-            .controller("tomorrowCtrl", function($scope) {
-                var dayNames = ["Sunday", "Monday", "Tuesday", "Wednesday",
-                    "Thursday", "Friday", "Saturday"];
+            }])
+            .controller("tomorrowCtrl", ['$scope','dayNames', function($scope, dayNames) {
                 $scope.day = dayNames[(new Date().getDay() + 1) % 7];
-            })
-            .directive("highlight", function() {
+            }])
+            .directive("highlight", function($filter) {
+                var dayFilter = $filter("dayName");
                 return function(scope, element, attrs) {
-                    if(scope.day == attrs["highlight"]) {
+                    if(dayFilter(scope.day) == attrs["highlight"]) {
                         element.css("color", "red");
                     }
+                }
+            })
+            .filter("dayName", function() {
+                var dayNames = ["Sunday", "Monday", "Tuesday", "Wednesday",
+                    "Thursday", "Friday", "Saturday"];
+                return function(input){
+                    return angular.isNumber(input) ? dayNames(input) : input;
                 }
             });
     </script>
@@ -32,8 +38,8 @@
     <div class="page-header">
         <h3>AngularJS App</h3>
     </div>
-    <h4 ng-controller="dayCtrl" highlight="Thursday">Today is {{day || "(unknown)"}} </h4>
-    <h4 ng-controller="tomorrowCtrl">Tomorrow is {{day || "(unknown)"}}</h4>
+    <h4 ng-controller="dayCtrl" highlight="Thursday">Today is {{day || "(unknown)" | dayName }} </h4>
+    <h4 ng-controller="tomorrowCtrl">Tomorrow is {{day || "(unknown)" | dayName}}</h4>
 </div>
 </body>
 </html>
