@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html ng-app="exampleApp">
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>AngularJS Demo</title>
+    <link rel="stylesheet" href="/css/bootstrap.css"/>
+    <link rel="stylesheet" href="/css/bootstrap-theme.css"/>
+    <script src="/scripts/angular.js"></script>
+    <script>
+        var myApp = angular.module("exampleApp", []);
+
+        myApp.controller("dayCtrl", function($scope) {
+           // to do controller
+        });
+    </script>
+</head>
+<body>
+<div class="panel" ng-controller="dayCtrl">
+    <div class="page-header">
+        <h3>AngularJS App</h3>
+    </div>
+    <h4>Today is {{day || "(unknown)"}} </h4>
+</div>
+
+</body>
+</html>
