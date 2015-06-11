@@ -10,11 +10,11 @@
         angular.module("exampleApp", [])
             .constant("dayNames", ["Sunday", "Monday", "Tuesday", "Wednesday",
                 "Thursday", "Friday", "Saturday"])
-            .controller("dayCtrl", function($scope,dayNames){
-                $scope.day = dayNames[new Date().getDay()];
+            .controller("dayCtrl", function($scope,days){
+                $scope.day = days.today;
             })
-            .controller("tomorrowCtrl", function($scope, dayNames) {
-                $scope.day = dayNames[(new Date().getDay() + 1) % 7];
+            .controller("tomorrowCtrl", function($scope, days) {
+                $scope.day = days.tomorrow;
             })
             .directive("highlight", function($filter) {
                 var dayFilter = $filter("dayName");
@@ -28,8 +28,12 @@
                 var dayNames = ["Sunday", "Monday", "Tuesday", "Wednesday",
                     "Thursday", "Friday", "Saturday"];
                 return function(input){
-                    return angular.isNumber(input) ? dayNames(input) : input;
+                    return angular.isNumber(input) ? dayNames[input] : input;
                 }
+            })
+            .service("days", function() {
+                this.today = new Date().getDay();
+                this.tomorrow = this.today + 1;
             });
     </script>
 </head>
