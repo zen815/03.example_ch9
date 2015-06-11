@@ -10,12 +10,12 @@
         angular.module("exampleApp", [])
             .constant("dayNames", ["Sunday", "Monday", "Tuesday", "Wednesday",
                 "Thursday", "Friday", "Saturday"])
-            .controller("dayCtrl", ['$scope', 'dayNames', function($scope,dayNames){
+            .controller("dayCtrl", function($scope,dayNames){
                 $scope.day = dayNames[new Date().getDay()];
-            }])
-            .controller("tomorrowCtrl", ['$scope','dayNames', function($scope, dayNames) {
+            })
+            .controller("tomorrowCtrl", function($scope, dayNames) {
                 $scope.day = dayNames[(new Date().getDay() + 1) % 7];
-            }])
+            })
             .directive("highlight", function($filter) {
                 var dayFilter = $filter("dayName");
                 return function(scope, element, attrs) {
