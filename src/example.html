@@ -3,24 +3,37 @@
 <head lang="en">
     <meta charset="UTF-8">
     <title>AngularJS Demo</title>
-    <link rel="stylesheet" href="/css/bootstrap.css"/>
-    <link rel="stylesheet" href="/css/bootstrap-theme.css"/>
-    <script src="/scripts/angular.js"></script>
+    <link rel="stylesheet" href="/bootstrap/bootstrap.css"/>
+    <link rel="stylesheet" href="/bootstrap/bootstrap-theme.css"/>
+    <script src="/angular/angular.js"></script>
     <script>
-        var myApp = angular.module("exampleApp", []);
-
-        myApp.controller("dayCtrl", function($scope) {
-           // to do controller
-        });
+        angular.module("exampleApp", [])
+            .controller("dayCtrl", function($scope) {
+                var dayNames = ["Sunday", "Monday", "Tuesday", "Wednesday",
+                    "Thursday", "Friday", "Saturday"];
+                $scope.day = dayNames[new Date().getDay()];
+            })
+            .controller("tomorrowCtrl", function($scope) {
+                var dayNames = ["Sunday", "Monday", "Tuesday", "Wednesday",
+                    "Thursday", "Friday", "Saturday"];
+                $scope.day = dayNames[(new Date().getDay() + 1) % 7];
+            })
+            .directive("highlight", function() {
+                return function(scope, element, attrs) {
+                    if(scope.day == attrs["highlight"]) {
+                        element.css("color", "red");
+                    }
+                }
+            });
     </script>
 </head>
 <body>
-<div class="panel" ng-controller="dayCtrl">
+<div class="panel">
     <div class="page-header">
         <h3>AngularJS App</h3>
     </div>
-    <h4>Today is {{day || "(unknown)"}} </h4>
+    <h4 ng-controller="dayCtrl" highlight="Thursday">Today is {{day || "(unknown)"}} </h4>
+    <h4 ng-controller="tomorrowCtrl">Tomorrow is {{day || "(unknown)"}}</h4>
 </div>
-
 </body>
 </html>
