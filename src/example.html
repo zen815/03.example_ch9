@@ -10,7 +10,16 @@
     <script src="filters.js"></script>
     <script>
         angular.module("exampleApp",
-            ["exampleApp.Controllers", "exampleApp.Filters", "exampleApp.Services", "exampleApp.Directives"]);
+                ["exampleApp.Controllers", "exampleApp.Filters", "exampleApp.Services", "exampleApp.Directives"])
+            .constant("startTime", new Date().toLocaleTimeString())
+            .config(function(startTime) {
+                console.log("Main module config: " + startTime);
+            })
+            .run(function(startTime){
+                console.log("Main module run: " + startTime);
+            });
+
+
 
         angular.module("exampleApp.Directives", [])
             .directive("highlight", function($filter) {
@@ -27,6 +36,12 @@
             .service("days", function(nowValue) {
                 this.today = nowValue.getDay();
                 this.tomorrow = this.today + 1;
+            })
+            .config(function(){
+                console.log("Services Module Config: ");
+            })
+            .run(function(startTime){
+                console.log("Services Module run: " + startTime);
             });
     </script>
 </head>
